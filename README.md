@@ -19,35 +19,7 @@ This project is an Incident Management System designed to help organizations tra
 ->MySQL Database
 ->Maven
 
-#### Boilerplate
 
-'''
-src
-├── main
-│ ├── java
-│ │ └── com
-│ │ └── incident
-│ │ ├── IncidentManagementApplication.java
-│ │ ├── controller
-│ │ │ ├── IncidentController.java
-│ │ │ └── UserController.java
-│ │ ├── model
-│ │ │ ├── Incident.java
-│ │ │ └── User.java
-│ │ ├── repository
-│ │ │ ├── IncidentRepository.java
-│ │ │ └── UserRepository.java
-│ │ └── service
-│ │ ├── IncidentService.java
-│ │ └── UserService.java
-│ └── resources
-│ ├── application.properties
-└── test
-└── java
-└── com
-└── incident
-└── IncidentManagementApplicationTests.java
-'''
 
 ### Frontend
 
