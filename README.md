@@ -32,21 +32,21 @@ This project is an Incident Management System designed to help organizations tra
 
 1. Clone this repository:
 
-''' sh
+```sh
 git clone https://github.com/yourusername/incident-management-system.git
-'''
+```
 
 2. Navigate to the backend directory:
 
-''' sh
+```sh
 cd incident-management-system/rapifuzz-technical-assessment-backend
-'''
+```
 
 3. Run the Spring Boot application using Maven wrapper:
 
-''' sh
+```sh
 mvnw.cmd spring-boot:run
-'''
+```
 
 4. The backend will start running on "http://localhost:8080".
 
@@ -54,21 +54,21 @@ mvnw.cmd spring-boot:run
 
 1. Navigate to the frontend directory:
 
-''' sh
+```sh
 cd incident-management-system/incident-management-frontend
-'''
+```
 
 2. Install dependencies:
 
-''' sh
+```sh
 npm install
-'''
+```
 
 3. Run the React application:
 
-''' sh
+```sh
 npm start
-'''
+```
 
 4. The frontend will be accessible on "http://localhost:3000".
 
