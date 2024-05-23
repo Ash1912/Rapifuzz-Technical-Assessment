@@ -5,50 +5,53 @@ import com.incident.services.IncidentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-@CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/incidents")
 public class IncidentController {
 
-    private IncidentService incidentService;
+    private final IncidentService incidentService;
 
     public IncidentController(IncidentService incidentService) {
         this.incidentService = incidentService;
     }
 
-    @PostMapping("/incidents")
-    public Incident createIncident(@RequestBody Incident incident) {
-        return incidentService.createIncident(incident);
+    @PostMapping
+    public ResponseEntity<Incident> createIncident(@RequestBody Incident incident, @RequestParam Long userId) {
+        Incident createdIncident = incidentService.createIncident(incident, userId);
+        return ResponseEntity.ok(createdIncident);
     }
 
-    @GetMapping("/incidents")
-    public List<Incident> getAllIncidents() {
-        return incidentService.getAllIncidents();
+    @GetMapping
+    public ResponseEntity<List<Incident>> getAllIncidentsByUser(@RequestParam Long userId) {
+        List<Incident> incidents = incidentService.getAllIncidentsByUserId(userId);
+        return ResponseEntity.ok(incidents);
     }
 
-    @DeleteMapping("/incidents/{id}")
-    public ResponseEntity<Map<String, Boolean>> deleteIncident(@PathVariable Long id) {
-        boolean deleted = false;
-        deleted = incidentService.deleteIncident(id);
-        Map<String, Boolean> response = new HashMap<>();
-        response.put("Incident has been deleted.", deleted);
-        return ResponseEntity.ok(response);
-    }
-
-    @GetMapping("/incidents/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Incident> getIncidentById(@PathVariable Long id) {
-        Incident incident = null;
-        incident = incidentService.getIncidentById(id);
-        return ResponseEntity.ok(incident);
+        Incident incident = incidentService.getIncidentById(id);
+        if (incident != null) {
+            return ResponseEntity.ok(incident);
+        }
+        return ResponseEntity.notFound().build();
     }
 
-    @PutMapping("/incidents/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Incident> updateIncident(@PathVariable Long id, @RequestBody Incident incident) {
-        incident = incidentService.updateIncident(id, incident);
-        return ResponseEntity.ok(incident);
+        Incident updatedIncident = incidentService.updateIncident(id, incident);
+        if (updatedIncident != null) {
+            return ResponseEntity.ok(updatedIncident);
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteIncident(@PathVariable Long id) {
+        if (incidentService.deleteIncident(id)) {
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.notFound().build();
     }
 }

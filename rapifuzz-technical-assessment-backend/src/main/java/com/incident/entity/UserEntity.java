@@ -1,33 +1,41 @@
-package com.incident.model;
+package com.incident.entity;
 
-public class User {
+import jakarta.persistence.*;
 
+@Entity
+@Table(name = "users")
+public class UserEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false, unique = true)
     private String email;
+
+    @Column(nullable = false)
+    private String password;
+
+    @Column(nullable = false)
     private String username;
+
+    @Column(nullable = false)
     private String phoneNumber;
+
+    @Column(nullable = false)
     private String address;
+
+    @Column(nullable = false)
     private String pinCode;
+
+    @Column(nullable = false)
     private String city;
+
+    @Column(nullable = false)
     private String country;
 
-    // Constructors
-    public User() {
-    }
+    // Getters and Setters...
 
-    public User(Long id, String email, String username, String phoneNumber, String address, String pinCode, String city,
-            String country) {
-        this.id = id;
-        this.email = email;
-        this.username = username;
-        this.phoneNumber = phoneNumber;
-        this.address = address;
-        this.pinCode = pinCode;
-        this.city = city;
-        this.country = country;
-    }
-
-    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -42,6 +50,14 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getUsername() {
@@ -92,18 +108,4 @@ public class User {
         this.country = country;
     }
 
-    // ToString Method for debugging
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", email='" + email + '\'' +
-                ", username='" + username + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", address='" + address + '\'' +
-                ", pinCode='" + pinCode + '\'' +
-                ", city='" + city + '\'' +
-                ", country='" + country + '\'' +
-                '}';
-    }
 }

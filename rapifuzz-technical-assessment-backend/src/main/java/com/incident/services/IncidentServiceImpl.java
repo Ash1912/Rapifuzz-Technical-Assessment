@@ -4,66 +4,75 @@ import com.incident.entity.IncidentEntity;
 import com.incident.model.Incident;
 import com.incident.repository.IncidentRepository;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 public class IncidentServiceImpl implements IncidentService {
-    private IncidentRepository incidentRepository;
 
+    private final IncidentRepository incidentRepository;
+
+    @Autowired
     public IncidentServiceImpl(IncidentRepository incidentRepository) {
         this.incidentRepository = incidentRepository;
     }
 
     @Override
-    public Incident createIncident(Incident incident) {
+    public Incident createIncident(Incident incident, Long userId) {
         IncidentEntity incidentEntity = new IncidentEntity();
         BeanUtils.copyProperties(incident, incidentEntity);
+        incidentEntity.setUserId(userId); // Assuming IncidentEntity has a userId field
         incidentRepository.save(incidentEntity);
+        BeanUtils.copyProperties(incidentEntity, incident, "id");
         return incident;
     }
 
     @Override
-    public List<Incident> getAllIncidents() {
-        List<IncidentEntity> incidentEntities
-                = incidentRepository.findAll();
-        List<Incident> incidents = incidentEntities
-                .stream()
-                .map(emp -> new Employee(
-                        emp.getId(),
-                        emp.getFirstName(),
-                        emp.getLastName(),
-                        emp.getEmailId()))
+    public List<Incident> getAllIncidentsByUserId(Long userId) {
+        return incidentRepository.findByUserId(userId).stream()
+                .map(this::convertToModel)
                 .collect(Collectors.toList());
-        return incidents;
-    }
-
-    @Override
-    public boolean deleteIncident(Long id) {
-        IncidentEntity incident = incidentRepository.findById(id).get();
-        incidentRepository.delete(incident);
-        return true;
     }
 
     @Override
     public Incident getIncidentById(Long id) {
-        IncidentEntity incidentEntity = incidentRepository.findById(id).get();
-        Incident incident = new Incident();
-        BeanUtils.copyProperties(incidentEntity, incident);
-        return incident;
+        Optional<IncidentEntity> incidentEntity = incidentRepository.findById(id);
+        if (incidentEntity.isPresent()) {
+            Incident incident = new Incident();
+            BeanUtils.copyProperties(incidentEntity.get(), incident);
+            return incident;
+        }
+        return null;
     }
 
     @Override
     public Incident updateIncident(Long id, Incident incident) {
-        IncidentEntity incidentEntity = incidentRepository.findById(id).get();
-        incidentEntity.setEmailId(incident.getEmailId());
-        incidentEntity.setFirstName(incident.getFirstName());
-        incidentEntity.setLastName(incident.getLastName());
-
-        incidentRepository.save(incidentEntity);
-        return incident;
+        Optional<IncidentEntity> existingEntity = incidentRepository.findById(id);
+        if (existingEntity.isPresent()) {
+            BeanUtils.copyProperties(incident, existingEntity.get(), "id");
+            incidentRepository.save(existingEntity.get());
+            return incident;
+        }
+        return null;
     }
 
+    @Override
+    public boolean deleteIncident(Long id) {
+        Optional<IncidentEntity> incident = incidentRepository.findById(id);
+        if (incident.isPresent()) {
+            incidentRepository.delete(incident.get());
+            return true;
+        }
+        return false;
+    }
+
+    private Incident convertToModel(IncidentEntity entity) {
+        Incident model = new Incident();
+        BeanUtils.copyProperties(entity, model);
+        return model;
+    }
 }
