@@ -1,12 +1,34 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
-    <div className="bg-gray-800">
-      <div className="h-16 px-8 flex items-center">
-        <p className="text-white font-bold">Incident Management System</p>
+    <nav style={{ backgroundColor: "#002855", padding: "10px 20px" }}>
+      {" "}
+      {/* Darker and thinner navbar */}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <Link
+          to="/"
+          style={{ color: "white", textDecoration: "none", fontSize: "1.2rem" }}
+        >
+          Incident Management System
+        </Link>
+        <div>
+          <Link to="/register" style={{ color: "white", marginRight: "20px" }}>
+            Register
+          </Link>
+          <Link to="/login" style={{ color: "white" }}>
+            Login
+          </Link>
+        </div>
       </div>
-    </div>
+    </nav>
   );
 };
 

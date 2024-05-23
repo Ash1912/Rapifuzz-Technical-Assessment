@@ -1,30 +1,28 @@
 # Incident Management System
 
-This project is an Incident Management System designed to help organizations track and manage incidents reported by users. It consists of a backend RESTful API developed using Java Spring Boot and a frontend user interface created with React.
+This project is an Incident Management System designed to help organizations track and manage incidents reported by users. It features a backend RESTful API developed using Java Spring Boot and a frontend interface created with React.
 
 ## Features
 
-->User registration and authentication.
-->Creating, updating, and deleting incidents.
-->Managing incident details such as reporter name, details, priority, and status.
-->Assigning incidents to specific users.
-->Viewing a list of all incidents.
+- User registration and authentication
+- CRUD operations for incidents
+- Management of incident details such as reporter name, details, priority, and status
+- Assigning incidents to specific users
+- Viewing a list of all incidents
 
 ## Technologies Used
 
 ### Backend
 
-->Java Spring Boot
-->Spring Data JPA
-->MySQL Database
-->Maven
-
-
+- Java Spring Boot
+- Spring Data JPA
+- MySQL Database
+- Maven
 
 ### Frontend
 
-->React
-->Axios
+- React
+- Axios for API requests
 
 ## Setup
 
@@ -92,4 +90,6 @@ Contributions are welcome! If you find any issues or have suggestions for improv
 
 This project is licensed under the MIT License.
 
-For Further Contacts mail to ashishmishra19122000@gmail.com
+## Contact
+
+For further inquiries, you can reach me at ashishmishra19122000@gmail.com

@@ -12,93 +12,89 @@ const UpdateIncident = () => {
     emailId: "",
   });
 
-  const handleChange = (e) => {
-    const value = e.target.value;
-    setIncident({ ...incident, [e.target.name]: value });
-  };
-
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await IncidentService.getIncidentById(incident.id);
+        const response = await IncidentService.getIncidentById(id);
         setIncident(response.data);
       } catch (error) {
         console.log(error);
       }
     };
     fetchData();
-  }, []);
+  }, [id]); // Ensure that `id` is included in the dependency array
 
-  const updateIncident = (e) => {
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setIncident((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const updateIncident = async (e) => {
     e.preventDefault();
-    console.log(incident);
-    IncidentService.updateIncident(incident, id)
-      .then((response) => {
-        navigate("/incidentList");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    try {
+      await IncidentService.updateIncident(incident, id);
+      navigate("/");
+    } catch (error) {
+      console.error("Failed to update incident", error);
+    }
   };
 
   return (
-    <div className="flex max-w-2xl mx-auto shadow border-b">
-      <div className="px-8 py-8">
-        <div className="font-thin text-2xl tracking-wider">
-          <h1>Update Incident</h1>
-        </div>
-        <div className="items-center justify-center h-14 w-full my-4">
-          <label className="block text-gray-600 text-sm font-normal">
-            First Name
-          </label>
-          <input
-            type="text"
-            name="firstName"
-            value={incident.firstName}
-            onChange={(e) => handleChange(e)}
-            className="h-10 w-96 border mt-2 px-2 py-2"
-          ></input>
-        </div>
-        <div className="items-center justify-center h-14 w-full my-4">
-          <label className="block text-gray-600 text-sm font-normal">
-            Last Name
-          </label>
-          <input
-            type="text"
-            name="lastName"
-            value={incident.lastName}
-            onChange={(e) => handleChange(e)}
-            className="h-10 w-96 border mt-2 px-2 py-2"
-          ></input>
-        </div>
-        <div className="items-center justify-center h-14 w-full my-4">
-          <label className="block text-gray-600 text-sm font-normal">
-            Email
-          </label>
-          <input
-            type="email"
-            name="emailId"
-            value={incident.emailId}
-            onChange={(e) => handleChange(e)}
-            className="h-10 w-96 border mt-2 px-2 py-2"
-          ></input>
-        </div>
+    <div className="max-w-2xl mx-auto p-8">
+      <h1 className="text-xl font-semibold mb-4">Update Incident</h1>
+      <form onSubmit={updateIncident}>
+        <label
+          className="block text-gray-700 text-sm font-bold mb-2"
+          htmlFor="firstName"
+        >
+          First Name
+        </label>
+        <input
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="firstName"
+          type="text"
+          name="firstName"
+          value={incident.firstName}
+          onChange={handleChange}
+        />
 
-        <div className="items-center justify-center h-14 w-full my-4 space-x-4 pt-4">
-          <button
-            onClick={updateIncident}
-            className="rounded text-white font-semibold bg-green-400 hover:bg-green-700 py-2 px-6"
-          >
-            Update
-          </button>
-          <button
-            onClick={() => navigate("/incidentList")}
-            className="rounded text-white font-semibold bg-red-400 hover:bg-red-700 py-2 px-6"
-          >
-            Cancel
-          </button>
-        </div>
-      </div>
+        <label
+          className="block text-gray-700 text-sm font-bold mb-2"
+          htmlFor="lastName"
+        >
+          Last Name
+        </label>
+        <input
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="lastName"
+          type="text"
+          name="lastName"
+          value={incident.lastName}
+          onChange={handleChange}
+        />
+
+        <label
+          className="block text-gray-700 text-sm font-bold mb-2"
+          htmlFor="emailId"
+        >
+          Email ID
+        </label>
+        <input
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="emailId"
+          type="email"
+          name="emailId"
+          value={incident.emailId}
+          onChange={handleChange}
+        />
+
+        <button
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-4"
+          type="submit"
+        >
+          Update
+        </button>
+      </form>
     </div>
   );
 };

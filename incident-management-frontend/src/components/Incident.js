@@ -1,8 +1,11 @@
+// src/components/Incident.js
+
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
 const Incident = ({ incident, deleteIncident }) => {
   const navigate = useNavigate();
+
   const editIncident = (e, id) => {
     e.preventDefault();
     navigate(`/editIncident/${id}`);
@@ -20,18 +23,18 @@ const Incident = ({ incident, deleteIncident }) => {
         <div className="text-sm text-gray-500">{incident.emailId}</div>
       </td>
       <td className="text-right px-6 py-4 whitespace-nowrap font-medium text-sm">
-        <a
-          onClick={(e, id) => editIncident(e, incident.id)}
+        <button
+          onClick={(e) => editIncident(e, incident.id)}
           className="text-indigo-600 hover:text-indigo-800 px-4 hover:cursor-pointer"
         >
           Edit
-        </a>
-        <a
-          onClick={(e, id) => deleteIncident(e, incident.id)}
+        </button>
+        <button
+          onClick={(e) => deleteIncident(e, incident.id)}
           className="text-indigo-600 hover:text-indigo-800 hover:cursor-pointer"
         >
           Delete
-        </a>
+        </button>
       </td>
     </tr>
   );

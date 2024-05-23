@@ -1,24 +1,29 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import "./App.css";
-import AddIncident from "./components/AddIncident";
-import IncidentList from "./components/IncidentList";
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
+import IncidentList from "./components/IncidentList";
+import AddIncident from "./components/AddIncident";
 import UpdateIncident from "./components/UpdateIncident";
+import Register from "./components/Register";
+import Login from "./components/Login";
+import ForgotPassword from "./components/ForgotPassword";
+import "./App.css";
 
 function App() {
   return (
-    <>
-      <BrowserRouter>
-        <Navbar />
+    <Router>
+      <Navbar />
+      <div className="container">
         <Routes>
-          <Route index element={<IncidentList />} />
-          <Route path="/" element={<IncidentList />}></Route>
-          <Route path="/incidentList" element={<IncidentList />} />
+          <Route path="/" element={<IncidentList />} />
           <Route path="/addIncident" element={<AddIncident />} />
-          <Route path="/editIncident/:id" element={<UpdateIncident/>} />
+          <Route path="/editIncident/:id" element={<UpdateIncident />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
         </Routes>
-      </BrowserRouter>
-    </>
+      </div>
+    </Router>
   );
 }
 

@@ -1,0 +1,29 @@
+/* src/styles.css */
+body.dark {
+  background-color: #333;
+  color: white;
+}
+
+body.light {
+  background-color: #fff;
+  color: black;
+}
+
+/* Adjust table and button styles as well */
+.table-dark {
+  background-color: #666;
+}
+
+.table-light {
+  background-color: #ccc;
+}
+
+.button-dark {
+  background-color: #000;
+  color: #fff;
+}
+
+.button-light {
+  background-color: #eee;
+  color: #333;
+}

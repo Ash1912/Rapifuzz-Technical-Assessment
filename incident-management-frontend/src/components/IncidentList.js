@@ -5,9 +5,8 @@ import Incident from "./Incident";
 
 const IncidentList = () => {
   const navigate = useNavigate();
-
   const [loading, setLoading] = useState(true);
-  const [incidents, setIncidents] = useState(null);
+  const [incidents, setIncidents] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -16,63 +15,80 @@ const IncidentList = () => {
         const response = await IncidentService.getIncidents();
         setIncidents(response.data);
       } catch (error) {
-        console.log(error);
+        console.error("Failed to fetch incidents", error);
       }
       setLoading(false);
     };
+
     fetchData();
   }, []);
 
-  const deleteIncident = (e, id) => {
-    e.preventDefault();
-    IncidentService.deleteIncident(id).then((res) => {
-      if (incidents) {
-        setIncidents((prevElement) => {
-          return prevElement.filter((incident) => incident.id !== id);
-        });
-      }
-    });
+  const deleteIncident = async (id) => {
+    try {
+      await IncidentService.deleteIncident(id);
+      setIncidents(incidents.filter((incident) => incident.id !== id));
+    } catch (error) {
+      console.error("Failed to delete incident", error);
+    }
   };
 
   return (
-    <div className="container mx-auto my-8">
-      <div className="h-12">
+    <div className="container mx-auto px-4 py-8">
+      <div className="flex justify-end mb-4">
         <button
           onClick={() => navigate("/addIncident")}
-          className="rounded bg-slate-600 text-white px-6 py-2 font-semibold"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
         >
           Add Incident
         </button>
       </div>
-      <div className="flex shadow border-b">
-        <table className="min-w-full">
+      <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+        <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
-              <th className="text-left font-medium text-gray-500 uppercase tracking-wider py-3 px-6">
+              <th
+                scope="col"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
                 First Name
               </th>
-              <th className="text-left font-medium text-gray-500 uppercase tracking-wider py-3 px-6">
+              <th
+                scope="col"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
                 Last Name
               </th>
-              <th className="text-left font-medium text-gray-500 uppercase tracking-wider py-3 px-6">
+              <th
+                scope="col"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
                 Email ID
               </th>
-              <th className="text-right font-medium text-gray-500 uppercase tracking-wider py-3 px-6">
+              <th
+                scope="col"
+                className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
                 Actions
               </th>
             </tr>
           </thead>
-          {!loading && (
-            <tbody className="bg-white">
-              {incidents.map((incident) => (
+          <tbody className="bg-white divide-y divide-gray-200">
+            {loading ? (
+              <tr>
+                <td colSpan="4" className="text-center py-4">
+                  Loading...
+                </td>
+              </tr>
+            ) : (
+              incidents.map((incident) => (
                 <Incident
+                  key={incident.id}
                   incident={incident}
                   deleteIncident={deleteIncident}
-                  key={incident.id}
-                ></Incident>
-              ))}
-            </tbody>
-          )}
+                />
+              ))
+            )}
+          </tbody>
         </table>
       </div>
     </div>
