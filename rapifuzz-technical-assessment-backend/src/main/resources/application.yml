@@ -1,17 +1,17 @@
-spring:
-  datasource:
-    driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/incident_management
-    username: root
-    password: C_20051685
-    driver-class-name: com.mysql.cj.jdbc.Driver
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
+# spring:
+#   datasource:
+#     driverClassName: com.mysql.jdbc.Driver
+#     url: jdbc:mysql://localhost:3306/incident_management
+#     username: root
+#     password: C_20051685
+#     driver-class-name: com.mysql.cj.jdbc.Driver
+#   jpa:
+#     hibernate:
+#       ddl-auto: update
+#     show-sql: true
+#     properties:
+#       hibernate:
+#         format_sql: true
 
-server:
-  port: 8080
+# server:
+#   port: 8080
