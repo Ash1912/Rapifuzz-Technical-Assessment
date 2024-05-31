@@ -1,0 +1,17 @@
+For Backend :
+Step 1 : cd rapifuzz-technical-assessment-backend
+Step 2 : mvnw.cmd spring-boot:run
+Step 3 : For user->registration through postman
+Post : http://localhost:8080/user/registration
+Body -> raw: 
+{
+    "address" : "GKP UP",
+    "city" : "GKP",
+    "confirmPassword" : "12345",
+    "country" : "India",
+    "emailId" : "ash@test.com",
+    "password" : "12345",
+    "phoneNo" : "7518124339",
+    "pinCode" : "273004",
+    "userName" : "Ashish"
+} 
