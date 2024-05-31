@@ -6,9 +6,13 @@ import "../assets/AddIncident.css";
 const AddIncident = () => {
   const navigate = useNavigate();
   const [incident, setIncident] = useState({
-    firstName: "",
-    lastName: "",
-    emailId: "",
+    email: "",
+    identity: "",
+    incidentDetail: "",
+    password: "",
+    incidentStatus: "",
+    priority: "",
+    reporterName: "",
   });
 
   const handleChange = (e) => {
@@ -30,36 +34,19 @@ const AddIncident = () => {
     <div className="add-incident-container">
       <h1>Add New Incident</h1>
       <form onSubmit={saveIncident}>
-        <div className="form-group">
-          <label htmlFor="firstName">First Name</label>
-          <input
-            type="text"
-            name="firstName"
-            value={incident.firstName}
-            onChange={handleChange}
-            className="form-control"
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="lastName">Last Name</label>
-          <input
-            type="text"
-            name="lastName"
-            value={incident.lastName}
-            onChange={handleChange}
-            className="form-control"
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="emailId">Email ID</label>
-          <input
-            type="email"
-            name="emailId"
-            value={incident.emailId}
-            onChange={handleChange}
-            className="form-control"
-          />
-        </div>
+        {Object.keys(incident).map((key) => (
+          <div key={key} className="form-group">
+            <label>{key.charAt(0).toUpperCase() + key.slice(1)}</label>
+            <input
+              type="text"
+              name={key}
+              value={incident[key]}
+              onChange={handleChange}
+              className="form-control"
+              required
+            />
+          </div>
+        ))}
         <button className="button-save">Save</button>
       </form>
     </div>

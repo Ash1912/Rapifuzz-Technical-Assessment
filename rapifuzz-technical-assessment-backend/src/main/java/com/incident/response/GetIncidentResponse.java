@@ -5,10 +5,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class GetIncidentResponse {
 
-    private String repoterName;
+    private String reporterName;
     private String incidentId;
     private String incidentStatus;
-    private String priorityString;
+    private String priority;
     private String incidentDetail;
     private String errorMsg;
     private int errorCode;
@@ -24,12 +24,12 @@ public class GetIncidentResponse {
 
     // Getter and Setter methods for all fields...
 
-    public String getRepoterName() {
-        return repoterName;
+    public String getReporterName() {
+        return reporterName;
     }
 
-    public void setRepoterName(String repoterName) {
-        this.repoterName = repoterName;
+    public void setReporterName(String reporterName) {
+        this.reporterName = reporterName;
     }
 
     public String getIncidentId() {
@@ -48,12 +48,12 @@ public class GetIncidentResponse {
         this.incidentStatus = incidentStatus;
     }
 
-    public String getPriorityString() {
-        return priorityString;
+    public String getPriority() {
+        return priority;
     }
 
-    public void setPriorityString(String priorityString) {
-        this.priorityString = priorityString;
+    public void setPriority(String priority) {
+        this.priority = priority;
     }
 
     public String getIncidentDetail() {

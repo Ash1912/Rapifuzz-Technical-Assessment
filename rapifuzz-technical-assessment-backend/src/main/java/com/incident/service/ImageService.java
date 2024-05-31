@@ -144,9 +144,9 @@ public class ImageService {
 				incident.setPriority("low");
 			}
 
-			if (request.getStatus().equalsIgnoreCase("open") || request.getStatus().equalsIgnoreCase("closed")
-					|| request.getStatus().equalsIgnoreCase("inprogress")) {
-				incident.setIncidentStatus(request.getStatus());
+			if (request.getIncidentStatus().equalsIgnoreCase("open") || request.getIncidentStatus().equalsIgnoreCase("closed")
+					|| request.getIncidentStatus().equalsIgnoreCase("inprogress")) {
+				incident.setIncidentStatus(request.getIncidentStatus());
 			} else {
 				incident.setIncidentStatus("Inprogress");
 
@@ -208,10 +208,12 @@ public class ImageService {
 	    
 	    // Prepare response
 	    GetIncidentResponse response = new GetIncidentResponse();
+		response.setReporterName(incident.getReporterName());
 	    response.setIncidentDetail(incident.getIncidentDetail());
 	    response.setIncidentId(incidentId);
 	    response.setIncidentStatus(incident.getIncidentStatus());
-	    response.setPriorityString(incident.getPriority());
+	    response.setPriority(incident.getPriority());
+		response.setErrorMsg("Got IncidentResponse Successfully!");
 	    response.setErrorCode(100);
 
 	    return response;
@@ -238,8 +240,8 @@ public class ImageService {
 		GetIncidentResponse getIncidentResponse = new com.incident.response.GetIncidentResponse();
 
 		getIncidentResponse.setIncidentDetail(request.getIncidentDetail());
-		getIncidentResponse.setPriorityString(request.getPriority());
-		getIncidentResponse.setRepoterName(incident.getReporterName());
+		getIncidentResponse.setPriority(request.getPriority());
+		getIncidentResponse.setReporterName(incident.getReporterName());
 		getIncidentResponse.setIncidentId(incident.getIncidentId());
 
 		if (incident.getIncidentStatus().equalsIgnoreCase("closed")) {
@@ -249,7 +251,8 @@ public class ImageService {
 
             return getIncidentResponse.createErrorResponse("You can't edit incident status because its already closed", 120);
 		}
-		getIncidentResponse.setIncidentStatus(request.getStatus());
+		getIncidentResponse.setIncidentStatus(request.getIncidentStatus());
+		getIncidentResponse.setErrorMsg("Updated IncidentResponse Successfully!");
         getIncidentResponse.setErrorCode(100);
 
 

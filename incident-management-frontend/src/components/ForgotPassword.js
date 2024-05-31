@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import IncidentService from "../services/IncidentService";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
@@ -6,21 +7,8 @@ const ForgotPassword = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(
-        "http://localhost:8080/api/users/forgot-password",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email }),
-        }
-      );
-      if (response.ok) {
-        alert("Please check your email to reset your password.");
-      } else {
-        throw new Error("Password reset request failed");
-      }
+      await IncidentService.forgotPassword({ email });
+      alert("Please check your email to reset your password.");
     } catch (error) {
       console.error("Forgot password error:", error);
       alert("Error: " + error.message);
@@ -33,12 +21,7 @@ const ForgotPassword = () => {
       <form onSubmit={handleSubmit}>
         <label>
           Email:
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
+          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
         </label>
         <button type="submit">Send Reset Link</button>
       </form>

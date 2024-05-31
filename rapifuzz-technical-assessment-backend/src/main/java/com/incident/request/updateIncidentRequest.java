@@ -2,22 +2,22 @@ package com.incident.request;
 
 public class updateIncidentRequest {
 
-    private String status;
+    private String incidentStatus;
 	private String priority;
 	private String incidentDetail;
 	private String incidentId;
 	
 	// Getter for Status
-	public String getStatus() {
-		return status;
+	public String getIncidentStatus() {
+		return incidentStatus;
 	}
 	 public String getIncidentId() {
 		 return incidentId;
 	 }
 	
 	// Setter for Status
-	public void setStatus(String status) {
-		this.status = status;
+	public void setIncidentStatus(String incidentStatus) {
+		this.incidentStatus = incidentStatus;
 	}
 	
 	// Getter for priority

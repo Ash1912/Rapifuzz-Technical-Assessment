@@ -1,12 +1,19 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import IncidentService from "../services/IncidentService";
 import "../assets/Register.css";
 
 const Register = () => {
   const [user, setUser] = useState({
-    username: "",
-    email: "",
+    userName: "",
+    emailId: "",
+    address: "",
+    pinCode: "",
+    city: "",
+    country: "",
+    phoneNo: "",
     password: "",
+    confirmPassword: "",
   });
   const navigate = useNavigate();
 
@@ -16,20 +23,9 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Assuming the endpoint for registration is '/api/users/register'
     try {
-      const response = await fetch("http://localhost:8080/api/users/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(user),
-      });
-      if (response.ok) {
-        navigate("/login");
-      } else {
-        throw new Error("Failed to register");
-      }
+      await IncidentService.registerUser(user);
+      navigate("/login");
     } catch (error) {
       console.error("Registration failed:", error);
       alert("Registration failed: " + error.message);
@@ -40,36 +36,18 @@ const Register = () => {
     <div className="register-container">
       <h1>Register</h1>
       <form onSubmit={handleSubmit} className="form">
-        <div className="form-group">
-          <label>Username:</label>
-          <input
-            type="text"
-            name="username"
-            value={user.username}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label>Email:</label>
-          <input
-            type="email"
-            name="email"
-            value={user.email}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label>Password:</label>
-          <input
-            type="password"
-            name="password"
-            value={user.password}
-            onChange={handleChange}
-            required
-          />
-        </div>
+        {Object.keys(user).map((key) => (
+          <div key={key} className="form-group">
+            <label>{key.charAt(0).toUpperCase() + key.slice(1)}:</label>
+            <input
+              type={key.includes("password") ? "password" : "text"}
+              name={key}
+              value={user[key]}
+              onChange={handleChange}
+              required
+            />
+          </div>
+        ))}
         <button type="submit" className="submit-btn">
           Register
         </button>

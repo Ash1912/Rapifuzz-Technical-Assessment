@@ -1,30 +1,39 @@
-// src/services/IncidentService.js
-
 import axios from "axios";
 
-const INCIDENT_API_BASE_URL = "http://localhost:8080/api/v1/incidents";
+const API_BASE_URL = "http://localhost:8080";
 
 class IncidentService {
+  registerUser(userDetails) {
+    return axios.post(`${API_BASE_URL}/user/registration`, userDetails);
+  }
+
+  loginUser(loginDetails) {
+    return axios.post(`${API_BASE_URL}/user/login`, loginDetails);
+  }
+
+  forgotPassword(passwordRequest) {
+    return axios.post(`${API_BASE_URL}/forgot/password`, passwordRequest);
+  }
+
   saveIncident(incident) {
-    return axios.post(INCIDENT_API_BASE_URL, incident);
+    return axios.post(`${API_BASE_URL}/add/incident`, incident);
   }
 
   getIncidents() {
-    return axios.get(INCIDENT_API_BASE_URL);
-  }
-
-  deleteIncident(id) {
-    return axios.delete(`${INCIDENT_API_BASE_URL}/${id}`);
+    return axios.get(`${API_BASE_URL}/get/incidents`);
   }
 
   getIncidentById(id) {
-    return axios.get(`${INCIDENT_API_BASE_URL}/${id}`);
+    return axios.get(`${API_BASE_URL}/get/incident/${id}`);
   }
 
-  updateIncident(incident, id) {
-    return axios.put(`${INCIDENT_API_BASE_URL}/${id}`, incident);
+  updateIncident(incident) {
+    return axios.post(`${API_BASE_URL}/update/incident`, incident);
+  }
+
+  deleteIncident(id) {
+    return axios.delete(`${API_BASE_URL}/delete/incident/${id}`);
   }
 }
 
-const incidentService = new IncidentService();
-export default incidentService; // Exporting as a named variable
+export default new IncidentService();

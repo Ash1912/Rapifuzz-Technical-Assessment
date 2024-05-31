@@ -1,5 +1,3 @@
-// src/components/Incident.js
-
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -14,13 +12,13 @@ const Incident = ({ incident, deleteIncident }) => {
   return (
     <tr key={incident.id}>
       <td className="text-left px-6 py-4 whitespace-nowrap">
-        <div className="text-sm text-gray-500">{incident.firstName}</div>
+        <div className="text-sm text-gray-500">{incident.reporterName}</div>
       </td>
       <td className="text-left px-6 py-4 whitespace-nowrap">
-        <div className="text-sm text-gray-500">{incident.lastName}</div>
+        <div className="text-sm text-gray-500">{incident.incidentDetail}</div>
       </td>
       <td className="text-left px-6 py-4 whitespace-nowrap">
-        <div className="text-sm text-gray-500">{incident.emailId}</div>
+        <div className="text-sm text-gray-500">{incident.email}</div>
       </td>
       <td className="text-right px-6 py-4 whitespace-nowrap font-medium text-sm">
         <button

@@ -48,7 +48,7 @@ a:hover {
 .button-rounded {
   padding: 10px 20px;
   border: none;
-  border-radius: 20px; /* Creates an oval shape */
+  border-radius: 20px;
   background-color: var(--button-bg);
   color: var(--button-text);
   cursor: pointer;
@@ -109,9 +109,8 @@ input:checked + .slider:before {
   transform: translateX(26px);
 }
 
-/* General button styling for oval shape */
 button {
-  border-radius: 20px; /* Oval shape */
+  border-radius: 20px;
   padding: 10px 20px;
   border: none;
   cursor: pointer;
@@ -119,6 +118,6 @@ button {
 }
 
 button:hover {
-  background-color: var(--button-bg-hover); /* Ensure these variables are defined in your CSS */
+  background-color: var(--button-bg-hover);
   transform: scale(1.05);
 }

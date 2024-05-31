@@ -33,7 +33,7 @@ public class ImageController {
     return imageService.addUser(userDetailsRequest);
 	}
 	
-	@GetMapping("user/login")
+	@PostMapping("user/login")
 	public CommonResponse loginUser(@RequestBody LoginRequest loginRequest) {
        return imageService.loginUser(loginRequest);
 	}

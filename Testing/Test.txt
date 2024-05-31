@@ -15,3 +15,48 @@ Body -> raw:
     "pinCode" : "273004",
     "userName" : "Ashish"
 } 
+
+Step 4 : For user->login through postman
+Post : http://localhost:8080/user/login
+Body -> raw:
+{
+    "email": "ash@test.com",
+    "password": "12345"
+}
+
+Step 5 : For add->incident through postman
+Post : http://localhost:8080/add/incident
+Body -> raw:
+{
+    "email": "ash@test.com",
+    "identity": "government",
+    "incidentDetail": "Lost passport on airport GKP",
+    "password": "12345",
+    "incidentStatus": "open",
+    "priority": "high",
+    "reporterName": "Reigns"
+}
+
+Step 6 : For forgot->password through postman
+Post : http://localhost:8080/forgot/password
+Body -> raw:
+{
+    "email": "ash@test.com",
+    "newPassword": "1912",
+    "confirmPassword" :"1912"
+}
+
+Step 7 : For get->incident through postman
+Get : http://localhost:8080/get/incident/RMG251112024
+
+Step 8 : For update->incident through postman
+Post : http://localhost:8080/update/incident
+Body -> raw:
+{
+    "incidentStatus":"closed",
+    "priority":"high",
+    "incidentDetail": "Lost passport on airport GKP",
+    "incidentId": "RMG251112024"
+}
+
+

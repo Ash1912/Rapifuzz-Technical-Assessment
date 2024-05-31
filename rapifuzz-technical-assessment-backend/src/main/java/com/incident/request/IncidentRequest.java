@@ -8,15 +8,7 @@ public class IncidentRequest {
    private String incidentStatus;
    private String priority;
    private String reporterName;
-   private String status;
    
-   public String getStatus() {
-       return status;
-   }
-
-   public void setStatus(String status) {
-       this.status = status;
-   }
    // Getter and setter for email
    public String getEmail() {
        return email;

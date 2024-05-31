@@ -6,10 +6,13 @@ const UpdateIncident = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [incident, setIncident] = useState({
-    id: id,
-    firstName: "",
-    lastName: "",
-    emailId: "",
+    email: "",
+    identity: "",
+    incidentDetail: "",
+    password: "",
+    incidentStatus: "",
+    priority: "",
+    reporterName: "",
   });
 
   useEffect(() => {
@@ -22,7 +25,7 @@ const UpdateIncident = () => {
       }
     };
     fetchData();
-  }, [id]); // Ensure that `id` is included in the dependency array
+  }, [id]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -32,7 +35,7 @@ const UpdateIncident = () => {
   const updateIncident = async (e) => {
     e.preventDefault();
     try {
-      await IncidentService.updateIncident(incident, id);
+      await IncidentService.updateIncident(incident);
       navigate("/");
     } catch (error) {
       console.error("Failed to update incident", error);
@@ -43,55 +46,20 @@ const UpdateIncident = () => {
     <div className="max-w-2xl mx-auto p-8">
       <h1 className="text-xl font-semibold mb-4">Update Incident</h1>
       <form onSubmit={updateIncident}>
-        <label
-          className="block text-gray-700 text-sm font-bold mb-2"
-          htmlFor="firstName"
-        >
-          First Name
-        </label>
-        <input
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="firstName"
-          type="text"
-          name="firstName"
-          value={incident.firstName}
-          onChange={handleChange}
-        />
-
-        <label
-          className="block text-gray-700 text-sm font-bold mb-2"
-          htmlFor="lastName"
-        >
-          Last Name
-        </label>
-        <input
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="lastName"
-          type="text"
-          name="lastName"
-          value={incident.lastName}
-          onChange={handleChange}
-        />
-
-        <label
-          className="block text-gray-700 text-sm font-bold mb-2"
-          htmlFor="emailId"
-        >
-          Email ID
-        </label>
-        <input
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="emailId"
-          type="email"
-          name="emailId"
-          value={incident.emailId}
-          onChange={handleChange}
-        />
-
-        <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-4"
-          type="submit"
-        >
+        {Object.keys(incident).map((key) => (
+          <div key={key} className="form-group">
+            <label>{key.charAt(0).toUpperCase() + key.slice(1)}</label>
+            <input
+              type="text"
+              name={key}
+              value={incident[key]}
+              onChange={handleChange}
+              className="form-control"
+              required
+            />
+          </div>
+        ))}
+        <button className="button-save" type="submit">
           Update
         </button>
       </form>
