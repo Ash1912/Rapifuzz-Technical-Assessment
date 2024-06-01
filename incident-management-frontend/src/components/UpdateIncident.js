@@ -1,27 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import IncidentService from "../services/IncidentService";
+import '../assets/UpdateIncident.css';
 
 const UpdateIncident = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [incident, setIncident] = useState({
-    email: "",
-    identity: "",
-    incidentDetail: "",
-    password: "",
-    incidentStatus: "",
-    priority: "",
-    reporterName: "",
-  });
+  const [incident, setIncident] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await IncidentService.getIncidentById(id);
-        setIncident(response.data);
+        const data = await IncidentService.getIncidentById(id);
+        if (data) {
+          setIncident(data);
+        } else {
+          console.error("Fetching incident failed: No data received");
+        }
       } catch (error) {
-        console.log(error);
+        console.error("Fetching incident failed:", error);
+      } finally {
+        setLoading(false);
       }
     };
     fetchData();
@@ -35,33 +35,39 @@ const UpdateIncident = () => {
   const updateIncident = async (e) => {
     e.preventDefault();
     try {
-      await IncidentService.updateIncident(incident);
+      const updated = await IncidentService.updateIncident(incident);
+      console.log("Update successful:", updated);
       navigate("/");
     } catch (error) {
       console.error("Failed to update incident", error);
     }
   };
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!incident) {
+    return <div>No incident data available.</div>;
+  }
+
   return (
-    <div className="max-w-2xl mx-auto p-8">
-      <h1 className="text-xl font-semibold mb-4">Update Incident</h1>
+    <div className="update-incident-container">
+      <h2>Update Incident</h2>
       <form onSubmit={updateIncident}>
         {Object.keys(incident).map((key) => (
           <div key={key} className="form-group">
-            <label>{key.charAt(0).toUpperCase() + key.slice(1)}</label>
+            <label>{key.charAt(0).toUpperCase() + key.slice(1)}:</label>
             <input
               type="text"
               name={key}
-              value={incident[key]}
+              value={incident[key] || ""}
               onChange={handleChange}
-              className="form-control"
               required
             />
           </div>
         ))}
-        <button className="button-save" type="submit">
-          Update
-        </button>
+        <button type="submit">Update</button>
       </form>
     </div>
   );

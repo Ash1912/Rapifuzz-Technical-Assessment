@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import IncidentService from "../services/IncidentService";
+import React, { useState } from 'react';
+import IncidentService from '../services/IncidentService';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
@@ -19,10 +19,8 @@ const ForgotPassword = () => {
     <div className="forgot-password-container">
       <h2>Forgot Password</h2>
       <form onSubmit={handleSubmit}>
-        <label>
-          Email:
-          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-        </label>
+        <label>Email:</label>
+        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
         <button type="submit">Send Reset Link</button>
       </form>
     </div>

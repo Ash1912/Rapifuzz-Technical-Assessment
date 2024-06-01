@@ -1,6 +1,7 @@
 package com.incident.service;
 
 import java.time.Year;
+import java.util.List;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import com.incident.database.services.IncidentServiceImpl;
 import com.incident.database.services.UserDetailServiceImpl;
 import com.incident.model.Incident;
 import com.incident.model.UserDetail;
+import com.incident.repository.IncidentRepository;
 import com.incident.request.ForgotPasswordRequest;
 import com.incident.request.IncidentRequest;
 import com.incident.request.LoginRequest;
@@ -31,6 +33,9 @@ public class ImageService {
 	
 	@Autowired
 	private IncidentServiceImpl incidentService;
+
+	@Autowired
+	private IncidentRepository incidentRepository;
 
 	Gson gson = new Gson();
 	Gson gsonObj = new GsonBuilder().setPrettyPrinting().create();
@@ -319,6 +324,10 @@ public class ImageService {
 		// Construct and return the Incident ID in the specified format
 		return "RMG" + randomNumber + currentYear;
 	}
+
+	public List<Incident> getAllIncidents() {
+        return (List<Incident>) incidentRepository.findAll();
+    }
 
 }
 

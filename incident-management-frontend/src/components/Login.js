@@ -1,40 +1,47 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import IncidentService from "../services/IncidentService";
-import "../assets/Login.css";
+import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import IncidentService from '../services/IncidentService';
+import { AuthContext } from '../contexts/AuthContext';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import '../assets/Login.css';
 
 const Login = () => {
-  const [credentials, setCredentials] = useState({ email: "", password: "" });
+  const [credentials, setCredentials] = useState({ email: '', password: '' });
+  const { setAuthStatus } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const handleChange = (e) => {
-    setCredentials({ ...credentials, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleLogin = async (event) => {
+    event.preventDefault();
     try {
-      await IncidentService.loginUser(credentials);
-      navigate("/");
+      const response = await IncidentService.login(credentials);
+      if (response.data.errorCode === 100) {
+        console.log('Login successful:', response.data);
+        setAuthStatus(true);
+        toast.success('Login Successful', {
+          position: toast.POSITION.TOP_CENTER,
+        });
+        navigate('/');
+      } else {
+        throw new Error(response.data.status);
+      }
     } catch (error) {
-      console.error("Login failed:", error);
-      alert("Login failed: " + error.message);
+      console.error('Login failed:', error.response?.data || 'Unknown error');
+      toast.error('Login Failed', {
+        position: toast.POSITION.TOP_CENTER,
+      });
     }
   };
 
   return (
     <div className="login-container">
       <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Email:
-          <input type="email" name="email" value={credentials.email} onChange={handleChange} required />
-        </label>
-        <label>
-          Password:
-          <input type="password" name="password" value={credentials.password} onChange={handleChange} required />
-        </label>
-        <button type="submit">Login</button>
+      <form onSubmit={handleLogin}>
+        <label>Email:</label>
+        <input type="email" name="email" value={credentials.email} onChange={e => setCredentials({...credentials, email: e.target.value})} required />
+        <label>Password:</label>
+        <input type="password" name="password" value={credentials.password} onChange={e => setCredentials({...credentials, password: e.target.value})} required />
+        <button type="submit">Log In</button>
       </form>
     </div>
   );

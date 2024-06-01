@@ -46,10 +46,13 @@ Body -> raw:
     "confirmPassword" :"1912"
 }
 
-Step 7 : For get->incident through postman
+Step 7 : For getting all incident information through postman
+Get : http://localhost:8080/get/incidents
+
+Step 8 : For get->incident through postman
 Get : http://localhost:8080/get/incident/RMG251112024
 
-Step 8 : For update->incident through postman
+Step 9 : For update->incident through postman
 Post : http://localhost:8080/update/incident
 Body -> raw:
 {
