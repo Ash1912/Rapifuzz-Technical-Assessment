@@ -7,8 +7,6 @@ import ForgotPassword from './components/ForgotPassword';
 import IncidentList from './components/IncidentList';
 import AddIncident from './components/AddIncident';
 import UpdateIncident from './components/UpdateIncident';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
 
 function App() {
@@ -25,7 +23,6 @@ function App() {
           <Route path="/forgot-password" element={<ForgotPassword />} />
         </Routes>
       </div>
-      <ToastContainer />
     </Router>
   );
 }

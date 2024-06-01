@@ -21,7 +21,7 @@ const Register = () => {
       const response = await IncidentService.register(userDetails);
       console.log('Registration successful:', response);
       toast.success('Registration successful!', {
-        position: toast.POSITION.TOP_CENTER,
+        position: "top-center",
         autoClose: 2000,
         style: { whiteSpace: 'nowrap' }
       });
@@ -31,7 +31,7 @@ const Register = () => {
     } catch (error) {
       console.error('Registration failed:', error.response?.data || 'Unknown error');
       toast.error('Registration failed!', {
-        position: toast.POSITION.TOP_CENTER,
+        position: "top-center",
         autoClose: 2000,
         style: { whiteSpace: 'nowrap' }
       });

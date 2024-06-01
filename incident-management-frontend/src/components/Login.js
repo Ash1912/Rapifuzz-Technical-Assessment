@@ -1,36 +1,38 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import IncidentService from '../services/IncidentService';
-import { AuthContext } from '../contexts/AuthContext';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../assets/Login.css';
 
 const Login = () => {
   const [credentials, setCredentials] = useState({ email: '', password: '' });
-  const { setAuthStatus } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
       const response = await IncidentService.login(credentials);
-      if (response.data.errorCode === 100) {
-        console.log('Login successful:', response.data);
-        setAuthStatus(true);
-        toast.success('Login Successful', {
-          position: toast.POSITION.TOP_CENTER,
-        });
-        navigate('/');
-      } else {
-        throw new Error(response.data.status);
-      }
+      console.log('Login successful:', response);
+      toast.success('Login Successful', {
+        position: "top-center",
+        autoClose: 2000,
+        style: { whiteSpace: 'nowrap' }
+      });
+      navigate('/');
     } catch (error) {
-      console.error('Login failed:', error.response?.data || 'Unknown error');
-      toast.error('Login Failed', {
-        position: toast.POSITION.TOP_CENTER,
+      console.error('Login failed:', error);
+      toast.error(`Login Failed: ${error.message}`, {
+        position: "top-center",
+        autoClose: 2000,
+        style: { whiteSpace: 'nowrap' }
       });
     }
+  };
+  
+
+  const handleForgotPassword = () => {
+    navigate('/forgot-password'); // Assuming you have a route set up for this
   };
 
   return (
@@ -42,6 +44,7 @@ const Login = () => {
         <label>Password:</label>
         <input type="password" name="password" value={credentials.password} onChange={e => setCredentials({...credentials, password: e.target.value})} required />
         <button type="submit">Log In</button>
+        <button type="button" onClick={handleForgotPassword} style={{ marginTop: '10px', backgroundColor: '#ffc107' }}>Forgot Password</button>
       </form>
     </div>
   );

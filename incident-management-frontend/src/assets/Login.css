@@ -11,6 +11,12 @@
   align-items: center;
 }
 
+.login-container h2 {
+  font-weight: bold;
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
 input[type="email"], input[type="password"] {
   width: 100%;
   padding: 8px;
@@ -32,4 +38,14 @@ button {
 
 button:hover {
   background-color: #0056e0;
+}
+
+.forgot-password-button {
+  background-color: #ffc107; /* Yellow color for distinction */
+  color: black;
+  margin-top: 10px; /* Added spacing */
+}
+
+.forgot-password-button:hover {
+  background-color: #e0a800; /* Darker yellow on hover */
 }
