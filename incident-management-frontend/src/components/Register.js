@@ -7,7 +7,7 @@ import '../assets/Register.css';
 
 const Register = () => {
   const [userDetails, setUserDetails] = useState({
-    userName: '', email: '', password: '', confirmPassword: '', address: '', city: '', country: '', phoneNo: '', pinCode: ''
+    userName: '', emailId: '', password: '', confirmPassword: '', address: '', city: '', country: '', phoneNo: '', pinCode: ''
   });
   const navigate = useNavigate();
 
@@ -18,19 +18,28 @@ const Register = () => {
       return;
     }
     try {
+      console.log('Attempting to register with:', userDetails);
       const response = await IncidentService.register(userDetails);
       console.log('Registration successful:', response);
-      toast.success('Registration successful!', {
-        position: "top-center",
-        autoClose: 2000,
-        style: { whiteSpace: 'nowrap' }
-      });
-      setTimeout(() => {
-        navigate('/login');
-      }, 2000);
+      if (response.status === 'Invalid email address') {
+        toast.error(`Registration failed! ${response.status}`, {
+          position: "top-center",
+          autoClose: 2000,
+          style: { whiteSpace: 'nowrap' }
+        });
+      } else {
+        toast.success('Registration successful!', {
+          position: "top-center",
+          autoClose: 2000,
+          style: { whiteSpace: 'nowrap' }
+        });
+        setTimeout(() => {
+          navigate('/login');
+        }, 2000);
+      }
     } catch (error) {
       console.error('Registration failed:', error.response?.data || 'Unknown error');
-      toast.error('Registration failed!', {
+      toast.error('Registration failed! An unexpected error occurred', {
         position: "top-center",
         autoClose: 2000,
         style: { whiteSpace: 'nowrap' }
@@ -45,7 +54,7 @@ const Register = () => {
         <label>Username:</label>
         <input type="text" name="userName" value={userDetails.userName} onChange={e => setUserDetails({...userDetails, userName: e.target.value})} required />
         <label>Email:</label>
-        <input type="email" name="email" value={userDetails.email} onChange={e => setUserDetails({...userDetails, email: e.target.value})} required />
+        <input type="email" name="emailId" value={userDetails.emailId} onChange={e => setUserDetails({...userDetails, emailId: e.target.value})} required />
         <label>Password:</label>
         <input type="password" name="password" value={userDetails.password} onChange={e => setUserDetails({...userDetails, password: e.target.value})} required />
         <label>Confirm Password:</label>

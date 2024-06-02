@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import IncidentService from '../services/IncidentService';
 import '../assets/AddIncident.css';
 
@@ -12,6 +13,8 @@ const AddIncident = () => {
     priority: 'low',
     reporterName: ''
   });
+
+  const navigate = useNavigate(); 
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -33,6 +36,7 @@ const AddIncident = () => {
           priority: 'low',
           reporterName: ''
         });
+        navigate('/');
       } else {
         alert(response.status);
       }

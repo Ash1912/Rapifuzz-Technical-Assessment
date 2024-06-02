@@ -1,6 +1,8 @@
 .incident-list {
     text-align: center;
     margin-top: 20px;
+    padding-top: 50px;
+    padding-bottom: 50px;
 }
 
 .incident-list h2 {

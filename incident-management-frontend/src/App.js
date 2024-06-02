@@ -7,6 +7,7 @@ import ForgotPassword from './components/ForgotPassword';
 import IncidentList from './components/IncidentList';
 import AddIncident from './components/AddIncident';
 import UpdateIncident from './components/UpdateIncident';
+import Footer from './components/Footer';
 import './App.css';
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
           <Route path="/forgot-password" element={<ForgotPassword />} />
         </Routes>
       </div>
+      <Footer />
     </Router>
   );
 }
